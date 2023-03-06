@@ -1,0 +1,19 @@
+
+
+  body{
+    background-color: rgb(43, 39, 40) !important;
+}
+
+ p { 
+  margin-top: -8px !important;
+ } 
+
+.bookThumbnail{
+    object-fit: contain !important;
+    display: block !important;
+    max-width: 150px !important;
+    max-height: 200px !important;
+    width: auto !important;
+    height: auto !important;
+}
+
