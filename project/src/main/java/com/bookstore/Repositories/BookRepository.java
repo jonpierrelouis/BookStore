@@ -8,4 +8,5 @@ import com.bookstore.models.Book;
 @Repository
 public interface BookRepository extends JpaRepository<Book, Integer>{
 
+	public void subtractOneFromBookInventory(int bookId);
 }
