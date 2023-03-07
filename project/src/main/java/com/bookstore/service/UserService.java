@@ -29,7 +29,9 @@ public class UserService {
 		
 		User newUser = new User(username, password);
 		
-		return userRepository.save(newUser);
+		User savedUser = userRepository.save(newUser);
+		
+		return savedUser;
 	}
 	
 	/**

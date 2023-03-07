@@ -52,6 +52,7 @@ public class UserController {
 	 * @param req Http servlet request
 	 * @return The user object
 	 */
+	@PostMapping("/login")
 	public ResponseEntity<User> loginUser(HttpSession session, HttpServletRequest req){
 		
 		String username = req.getParameter("username");
@@ -59,7 +60,7 @@ public class UserController {
 		
 		Optional<User> optionalUser = userService.loginUser(username, password);
 		
-		if(optionalUser.isPresent()) {
+		if(!optionalUser.isPresent()) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 		

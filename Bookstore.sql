@@ -16,4 +16,8 @@ user_name varchar(50),
 user_password varchar(50)
 );
 
+INSERT INTO users VALUES(DEFAULT, 'test1', 'password');
+INSERT INTO users VALUES(DEFAULT, 'test2', 'password');
+
 SELECT * FROM books;
+SELECT * FROM users;
