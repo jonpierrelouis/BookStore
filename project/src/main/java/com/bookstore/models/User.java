@@ -25,4 +25,11 @@ public class User {
 	
 	@Column(name="user_password")
 	private String userPassword;
+
+	public User(String userName, String userPassword) {
+		super();
+		this.userName = userName;
+		this.userPassword = userPassword;
+	}
+	
 }

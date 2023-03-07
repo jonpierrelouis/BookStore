@@ -20,8 +20,8 @@ public class BookService {
 	}
 
 	/**
-	 * 
-	 * @return A list including all books in the repository
+	 * Function to fetch all books in the repository
+	 * @return A list of books
 	 */
 	public List<Book> seeAllBooks() {
 		return bookRepository.findAll();

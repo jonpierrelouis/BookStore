@@ -21,7 +21,6 @@ public class BookController {
 	}
 	
 	/**
-	 * 
 	 * @return A list of all books in the database
 	 */
 	@GetMapping(value="books")
