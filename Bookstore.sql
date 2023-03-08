@@ -9,6 +9,7 @@ book_picture bytea
 
 ALTER TABLE books ADD inventory int;
 UPDATE books SET inventory = 100;
+UPDATE books SET inventory = inventory - 1 WHERE book_id = 1;
 
 CREATE TABLE users(
 user_id SERIAL PRIMARY KEY,
@@ -28,3 +29,4 @@ INSERT INTO users VALUES(DEFAULT, 'test2', 'password');
 
 SELECT * FROM books;
 SELECT * FROM users;
+SELECT * FROM cart;
