@@ -1,5 +1,6 @@
 package com.bookstore.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -7,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bookstore.models.Book;
 import com.bookstore.models.Cart;
 import com.bookstore.repositories.BookRepository;
 import com.bookstore.repositories.CartRepository;
@@ -55,12 +57,22 @@ public class CartService {
 	public void purchaseBook(int userId) {
 		
 		List<Cart> cartItems = cartRepository.findByUserId(userId);
-		System.out.println("userId: " +userId);
 		
 		for(Cart item : cartItems) {
 			bookRepository.subtractOneFromBookInventory(item.getBookId());
 			cartRepository.removeByUserIdAndBookId(userId, item.getBookId());
-			System.out.println("Book Id: " + item.getBookId());
 		}
+	}
+	
+	public List<Book> getCartItems(int userId){
+		
+		List<Cart> cartItems = cartRepository.findByUserId(userId);
+		List<Book> bookList = new ArrayList<Book>();
+		
+		for(Cart item : cartItems) {
+			bookList.add(bookRepository.findByBookId(item.getBookId()));
+		}
+		
+		return bookList;
 	}
 }

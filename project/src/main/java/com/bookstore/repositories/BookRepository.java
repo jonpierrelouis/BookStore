@@ -14,4 +14,6 @@ public interface BookRepository extends JpaRepository<Book, Integer>{
 	@Query(value="UPDATE books SET inventory = inventory-1 WHERE book_id = ?1",
 			nativeQuery = true)
 	public void subtractOneFromBookInventory(int bookId);
+	
+	public Book findByBookId(int bookId);
 }
