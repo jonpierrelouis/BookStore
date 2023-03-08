@@ -1,11 +1,14 @@
 package com.bookstore.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookstore.service.CartService;
@@ -55,8 +58,12 @@ public class CartController {
 		return ResponseEntity.ok().build();
 	}
 	
-	@PostMapping("/purchaseBook")
-	public ResponseEntity<Void> purchaseBook(HttpSession session, HttpServletRequest req){
+	@PostMapping("/purchaseBooks")
+	public ResponseEntity<Void> purchaseBook(HttpSession session){
+		
+		Object userId = session.getAttribute("userId");
+		
+		cartService.purchaseBook((Integer) userId);
 		
 		return ResponseEntity.ok().build();
 	}

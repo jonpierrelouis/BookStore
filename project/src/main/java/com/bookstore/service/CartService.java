@@ -1,5 +1,7 @@
 package com.bookstore.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,12 +50,17 @@ public class CartService {
 	/**
 	 * This method also for the user to buy a book in their cart
 	 * @param userId The user's Id number
-	 * @param bookId the book's Id number
 	 */
 	@Transactional
-	public void purchaseBook(int userId, int bookId) {
+	public void purchaseBook(int userId) {
 		
-		bookRepository.subtractOneFromBookInventory(bookId);
-		cartRepository.removeByUserIdAndBookId(userId, bookId);
+		List<Cart> cartItems = cartRepository.findByUserId(userId);
+		System.out.println("userId: " +userId);
+		
+		for(Cart item : cartItems) {
+			bookRepository.subtractOneFromBookInventory(item.getBookId());
+			cartRepository.removeByUserIdAndBookId(userId, item.getBookId());
+			System.out.println("Book Id: " + item.getBookId());
+		}
 	}
 }
