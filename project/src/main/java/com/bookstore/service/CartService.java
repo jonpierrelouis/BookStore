@@ -58,8 +58,8 @@ public class CartService {
 		List<Cart> cartItems = cartRepository.findByUserId(userId);
 		
 		for(Cart item : cartItems) {
-//			bookRepository.subtractOneFromBookInventory(item.getBookId());
-//			cartRepository.removeByUserIdAndBookId(userId, item.getBookId());
+			bookRepository.subtractOneFromBookInventory(item.getBookId());
+			cartRepository.removeByUserIdAndBookId(userId, item.getBookId());
 		}
 	}
 	

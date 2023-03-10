@@ -18,6 +18,15 @@ window.onload = function () {
       );
   }
 
+  const addBook = async (bookId) => {
+
+    let xhttp = new XMLHttpRequest();
+    
+    xhttp.open('POST', '/addBookToCart', true);
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.send(`bookId=${bookId}`);
+  }
+
   /**
    * 
    * @param {*} bookJson Json holding data of books
@@ -99,7 +108,7 @@ window.onload = function () {
       newButton.className = "btn btn-primary";
       newButton.innerText = "Add to Cart";
       newButton.onclick = function () {
-        console.log("BookId:", bookJson[i].bookId);
+        addBook(bookJson[i].bookId)
       };
       newCardBody.appendChild(newButton);
 
