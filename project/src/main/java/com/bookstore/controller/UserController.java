@@ -25,7 +25,7 @@ public class UserController {
 	 * This method allows for the creation of a new user
 	 * @param session Http session
 	 * @param req Http servlet request
-	 * @return Returns the created user's information
+	 * @return Returns redirection to the login page
 	 */
 	@PostMapping(value = "/register")
 	public String createAccount(HttpSession session, HttpServletRequest req){
@@ -35,7 +35,7 @@ public class UserController {
 		String passwordConfirm = req.getParameter("passwordCONFIRM");
 		
 		if(!password.equals(passwordConfirm)) {
-			return "redirect:/users/loginfallback.html";
+			return "redirect:/users/registrationfallback.html";
 		}
 		
 		//check to see if data exists
@@ -56,7 +56,7 @@ public class UserController {
 	 * This method is to sign in a new user
 	 * @param session Http session
 	 * @param req Http servlet request
-	 * @return The user object
+	 * @return Redirects to the main page
 	 */
 	@PostMapping(value = "/login")
 	public String loginUser(HttpSession session, HttpServletRequest req){
@@ -78,7 +78,7 @@ public class UserController {
 	/**
 	 * Method to allow a user to logout
 	 * @param session
-	 * @return Generic response entity holding no data
+	 * @return redirection to the login page
 	 */
 	@PostMapping("/logout")
 	public String logoutUser(HttpSession session){

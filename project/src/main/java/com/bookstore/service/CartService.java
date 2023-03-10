@@ -7,8 +7,6 @@ import java.util.Map.Entry;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +44,6 @@ public class CartService {
 	 * @param userId the user's Id number
 	 * @param bookId the book's Id number
 	 */
-	@Transactional
 	public void removeBookFromCart(int userId, int bookId) {
 		
 		cartRepository.removeByUserIdAndBookId(userId, bookId);
@@ -56,14 +53,13 @@ public class CartService {
 	 * This method also for the user to buy a book in their cart
 	 * @param userId The user's Id number
 	 */
-	@Transactional
 	public void purchaseBook(int userId) {
 		
 		List<Cart> cartItems = cartRepository.findByUserId(userId);
 		
 		for(Cart item : cartItems) {
-			bookRepository.subtractOneFromBookInventory(item.getBookId());
-			cartRepository.removeByUserIdAndBookId(userId, item.getBookId());
+//			bookRepository.subtractOneFromBookInventory(item.getBookId());
+//			cartRepository.removeByUserIdAndBookId(userId, item.getBookId());
 		}
 	}
 	

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookstore.DTOs.CartBookDTO;
-import com.bookstore.models.Book;
+import com.bookstore.DTOs.Website;
 import com.bookstore.service.CartService;
 
 @RestController
@@ -66,13 +66,13 @@ public class CartController {
 	 * @return void
 	 */
 	@PostMapping("/purchaseBooks")
-	public ResponseEntity<Void> purchaseBook(HttpSession session){
+	public Website purchaseBook(HttpSession session){
 		
 		Object userId = session.getAttribute("userId");
 		
 		cartService.purchaseBook((Integer) userId);
 		
-		return ResponseEntity.ok().build();
+		return new Website("/cart/PurchasePage.html");
 	}
 
 	/**

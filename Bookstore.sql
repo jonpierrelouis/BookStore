@@ -27,6 +27,7 @@ CONSTRAINT fkbookid FOREIGN KEY (fk_book_id) REFERENCES books (book_id)
 INSERT INTO users VALUES(DEFAULT, 'test1@gmail.com', 'password');
 INSERT INTO users VALUES(DEFAULT, 'test2', 'password');
 
+
 SELECT * FROM books;
 SELECT * FROM users;
 SELECT * FROM cart;

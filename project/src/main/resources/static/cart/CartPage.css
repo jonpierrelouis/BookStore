@@ -1,3 +1,9 @@
 body{
     background-color: rgb(43, 39, 40) !important;
 }
+
+.message {
+    margin-left: auto !important; 
+    margin-right: auto !important;
+    color:rgb(255, 255, 255) !important;
+}
