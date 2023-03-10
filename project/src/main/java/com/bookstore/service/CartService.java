@@ -2,12 +2,17 @@ package com.bookstore.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bookstore.DTOs.CartBookDTO;
 import com.bookstore.models.Book;
 import com.bookstore.models.Cart;
 import com.bookstore.repositories.BookRepository;
@@ -33,9 +38,7 @@ public class CartService {
 	 */
 	public void addBookToCart(int userId, int bookId) {
 		
-		Cart newCartEntry = new Cart(userId, bookId);
-		
-		cartRepository.save(newCartEntry);
+		cartRepository.addByUserIdAndBookId(userId, bookId);
 	}
 
 	/**
@@ -64,13 +67,31 @@ public class CartService {
 		}
 	}
 	
-	public List<Book> getCartItems(int userId){
+	/**
+	 * Method to get a list of books in the user's shopping cart
+	 * @param userId
+	 * @return list of Books in Cart Book format
+	 */
+	public List<CartBookDTO> getCartItems(int userId){
 		
 		List<Cart> cartItems = cartRepository.findByUserId(userId);
-		List<Book> bookList = new ArrayList<Book>();
-		
-		for(Cart item : cartItems) {
-			bookList.add(bookRepository.findByBookId(item.getBookId()));
+		Map<Cart, Long> cartItemsTracked = cartItems.stream().collect(Collectors.groupingBy((Function.identity()), Collectors.counting()));
+
+		List<CartBookDTO> bookList = new ArrayList<CartBookDTO>();
+			
+		for(Entry<Cart, Long> entry : cartItemsTracked.entrySet() ) {
+			Book book = bookRepository.findByBookId(entry.getKey().getBookId());
+			
+			CartBookDTO cartBook = new CartBookDTO();
+			cartBook.setBookId(book.getBookId());
+			cartBook.setBookName(book.getBookName());
+			cartBook.setBookAuthor(book.getBookAuthor());
+			cartBook.setBookGenre(book.getBookGenre());
+			cartBook.setBookPrice(book.getBookPrice());
+			cartBook.setBookPicture(book.getBookPicture());
+			cartBook.setQuantity(entry.getValue());
+			
+			bookList.add(cartBook);
 		}
 		
 		return bookList;

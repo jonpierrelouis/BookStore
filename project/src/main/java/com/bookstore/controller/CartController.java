@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bookstore.DTOs.CartBookDTO;
 import com.bookstore.models.Book;
 import com.bookstore.service.CartService;
 
@@ -80,11 +81,11 @@ public class CartController {
 	 * @return a List of books
 	 */
 	@GetMapping("/getCartItems")
-	public ResponseEntity<List<Book>> getCartItems(HttpSession session){
-		
+	public ResponseEntity<List<CartBookDTO>> getCartItems(HttpSession session){
+	
 		Object userId = session.getAttribute("userId");
 		
-		List<Book> bookList = cartService.getCartItems((Integer) userId);
+		List<CartBookDTO> bookList = cartService.getCartItems((Integer) userId);
 		
 		return ResponseEntity.ok(bookList);
 	}

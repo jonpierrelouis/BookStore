@@ -5,15 +5,13 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.bookstore.models.User;
 import com.bookstore.service.UserService;
 
-@RestController
+@Controller
 public class UserController {
 	
 	private final UserService userService;
@@ -29,21 +27,29 @@ public class UserController {
 	 * @param req Http servlet request
 	 * @return Returns the created user's information
 	 */
-	@PostMapping("/register")
-	public ResponseEntity<User> createAccount(HttpSession session, HttpServletRequest req){
+	@PostMapping(value = "/register")
+	public String createAccount(HttpSession session, HttpServletRequest req){
 		
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
+		String passwordConfirm = req.getParameter("passwordCONFIRM");
+		
+		if(!password.equals(passwordConfirm)) {
+			return "redirect:/users/loginfallback.html";
+		}
 		
 		//check to see if data exists
 		//if it does send bad request
 		Optional<User> optionalUser = userService.loginUser(username, password);
 		
 		if(optionalUser.isPresent()) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+			return "redirect:/users/registrationfallback.html";
 		}
 		
-		return ResponseEntity.status(HttpStatus.CREATED).body(userService.createAccount(username, password));
+		//create account because it does not exist
+		userService.createAccount(username, password);
+		
+		return "redirect:/users/index.html";
 	}
 	
 	/**
@@ -52,8 +58,8 @@ public class UserController {
 	 * @param req Http servlet request
 	 * @return The user object
 	 */
-	@PostMapping("/login")
-	public ResponseEntity<User> loginUser(HttpSession session, HttpServletRequest req){
+	@PostMapping(value = "/login")
+	public String loginUser(HttpSession session, HttpServletRequest req){
 		
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
@@ -61,12 +67,12 @@ public class UserController {
 		Optional<User> optionalUser = userService.loginUser(username, password);
 		
 		if(!optionalUser.isPresent()) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+			return "redirect:/users/loginfallback.html";
 		}
 		
 		session.setAttribute("userId", optionalUser.get().getUserId());
 		
-		return ResponseEntity.ok(optionalUser.get());
+		return "redirect:/users/checkOne.html";
 	}
 	
 	/**
@@ -75,11 +81,11 @@ public class UserController {
 	 * @return Generic response entity holding no data
 	 */
 	@PostMapping("/logout")
-	public ResponseEntity<Void> logoutUser(HttpSession session){
+	public String logoutUser(HttpSession session){
 		session.removeAttribute("userId");
 		
 		System.out.println("logged out");
-		return ResponseEntity.ok().build();
+		return "redirect:/users/index.html";
 	}
 
 }

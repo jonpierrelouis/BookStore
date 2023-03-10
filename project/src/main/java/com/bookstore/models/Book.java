@@ -18,23 +18,23 @@ public class Book {
 
 	@Id
 	@Column(name="book_id")
-	int bookId;
+	private int bookId;
 	
 	@Column(name="book_name")
-	String bookName;
+	private String bookName;
 	
 	@Column(name="book_author")
-	String bookAuthor;
+	private String bookAuthor;
 	
 	@Column(name="book_genre")
-	String bookGenre;
+	private String bookGenre;
 	
 	@Column(name="book_price")
-	double bookPrice;
+	private double bookPrice;
 	
 	@Column(name="book_picture")
-	byte[] bookPicture;
+	private byte[] bookPicture;
 	
 	@Column(name="inventory")
-	int bookInventory;
+	private int bookInventory;
 }
