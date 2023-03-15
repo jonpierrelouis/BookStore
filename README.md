@@ -14,7 +14,7 @@
 - A user can see a selection of book in stock.
 - A user can add books into a cart and purchase them.
 
-##Installation
+## Installation
 Clone the repository:
 ```
 git clone https://github.com/jonpierrelouis/BookStore.git
